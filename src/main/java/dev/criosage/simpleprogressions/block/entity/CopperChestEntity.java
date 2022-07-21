@@ -76,7 +76,6 @@ public class CopperChestEntity extends BlockEntity implements NamedScreenHandler
     private <E extends BlockEntity & IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         AnimationController<?> controller = event.getController();
         controller.transitionLengthTicks = 0;
-        if(PlayerEntity.get)
         return  PlayState.CONTINUE;
     }
     @Override
