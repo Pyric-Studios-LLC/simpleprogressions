@@ -1,6 +1,7 @@
 package dev.criosage.simpleprogressions.block.custom;
 
 import dev.criosage.simpleprogressions.block.entity.CopperChestEntity;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -17,8 +18,9 @@ import net.minecraft.world.World;
 
 public class CopperChestBlock extends BlockWithEntity {
     public CopperChestBlock(Settings settings) {
-        super(settings);
+        super(settings.nonOpaque());
     }
+    public boolean isOpen = false;
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
@@ -28,7 +30,7 @@ public class CopperChestBlock extends BlockWithEntity {
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         //With inheriting from BlockWithEntity this defaults to INVISIBLE, so we need to change that!
-        return BlockRenderType.MODEL;
+        return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
     @Override
@@ -45,6 +47,7 @@ public class CopperChestBlock extends BlockWithEntity {
         }
         return ActionResult.SUCCESS;
     }
+
 
 
     //This method will drop all items onto the ground when the block is broken

@@ -31,7 +31,7 @@ public class SimpleProgressions implements ModInitializer {
 			new Identifier("simpleprogressions", "itemgroup"),
 			() -> new ItemStack(Blocks.COBBLESTONE));
 	//Blocks
-	public static final Identifier COPPER_CHEST_ID = new Identifier(MOD_ID, "copper_chest");
+	public static final Identifier COPPER_CHEST_ID = new Identifier(MOD_ID, "copper_chest.item.json");
 	public static final Block COPPER_CHEST_BLOCK;
 	public static final BlockItem COPPER_CHEST_ITEM;
 	public static final BlockEntityType<CopperChestEntity> COPPER_CHEST_ENTITY;
