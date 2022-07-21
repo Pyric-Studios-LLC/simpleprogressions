@@ -42,7 +42,7 @@ public class SimpleProgressions implements ModInitializer {
 				new CopperChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST)));
 		COPPER_CHEST_ITEM = Registry.register(Registry.ITEM,
 				COPPER_CHEST_ID,
-				new BlockItem(COPPER_CHEST_BLOCK, new Item.Settings().group(ItemGroup.MISC)));
+				new BlockItem(COPPER_CHEST_BLOCK, new Item.Settings().group(SimpleProgressionsItemGroup)));
 		COPPER_CHEST_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE,
 				COPPER_CHEST_ID,
 				FabricBlockEntityTypeBuilder.create(CopperChestEntity::new, COPPER_CHEST_BLOCK).build(null));

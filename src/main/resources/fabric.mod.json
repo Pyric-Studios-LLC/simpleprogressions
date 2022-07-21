@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "dev.criosage.simpleprogressions.SimpleProgressions"
+    ],
+    "client": [
+      "dev.criosage.simpleprogressions.SimpleProgressionsClient"
     ]
   },
   "mixins": [
