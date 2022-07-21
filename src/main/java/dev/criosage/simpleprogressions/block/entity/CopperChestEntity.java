@@ -16,7 +16,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 
-public class CopperChestEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory {
+
+public class CopperChestEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory, IAnimatable {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
 
     public CopperChestEntity(BlockPos pos, BlockState state) {
