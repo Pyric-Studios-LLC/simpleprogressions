@@ -1,6 +1,7 @@
 package dev.criosage.simpleprogressions.screenhandler;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import dev.criosage.simpleprogressions.SimpleProgressions;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -10,7 +11,7 @@ import net.minecraft.util.Identifier;
 
 public class CopperChestScreen extends HandledScreen<CopperChestScreenHandler> {
     //A path to the gui texture. In this example we use the texture from the dispenser
-    private static final Identifier TEXTURE = new Identifier("minecraft", "textures/gui/container/dispenser.png");
+    private static final Identifier TEXTURE = new Identifier(SimpleProgressions.MOD_ID, "textures/gui/container/generic_36.png");
 
     public CopperChestScreen(CopperChestScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);

@@ -1,22 +1,26 @@
 package dev.criosage.simpleprogressions.block.custom;
 
 import dev.criosage.simpleprogressions.block.entity.CopperChestEntity;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ItemScatterer;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+import java.util.stream.Stream;
+
 public class CopperChestBlock extends BlockWithEntity {
+    public static final DirectionProperty FACING = Properties.FACING;
     public CopperChestBlock(Settings settings) {
         super(settings.nonOpaque());
     }
@@ -31,6 +35,14 @@ public class CopperChestBlock extends BlockWithEntity {
     public BlockRenderType getRenderType(BlockState state) {
         //With inheriting from BlockWithEntity this defaults to INVISIBLE, so we need to change that!
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
+    }
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
+
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext context) {
+        return this.getDefaultState().with(FACING, context.getPlayerLookDirection().getOpposite());
     }
 
     @Override

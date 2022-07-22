@@ -5,6 +5,7 @@ import dev.criosage.simpleprogressions.block.entity.CopperChestEntity;
 import dev.criosage.simpleprogressions.screenhandler.CopperChestScreenHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
@@ -31,7 +32,7 @@ public class SimpleProgressions implements ModInitializer {
 			new Identifier("simpleprogressions", "itemgroup"),
 			() -> new ItemStack(Blocks.COBBLESTONE));
 	//Blocks
-	public static final Identifier COPPER_CHEST_ID = new Identifier(MOD_ID, "copper_chest.item.json");
+	public static final Identifier COPPER_CHEST_ID = new Identifier(MOD_ID, "copper_chest");
 	public static final Block COPPER_CHEST_BLOCK;
 	public static final BlockItem COPPER_CHEST_ITEM;
 	public static final BlockEntityType<CopperChestEntity> COPPER_CHEST_ENTITY;
@@ -51,5 +52,6 @@ public class SimpleProgressions implements ModInitializer {
 	}
 	@Override
 	public void onInitialize() {
+
 	}
 }

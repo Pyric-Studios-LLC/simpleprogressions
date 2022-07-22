@@ -30,7 +30,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class CopperChestEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory, IAnimatable {
     private final AnimationFactory manager = new AnimationFactory(this);
-    private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
+    private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(36, ItemStack.EMPTY);
 
     public CopperChestEntity(BlockPos pos, BlockState state) {
         super(SimpleProgressions.COPPER_CHEST_ENTITY, pos, state);
