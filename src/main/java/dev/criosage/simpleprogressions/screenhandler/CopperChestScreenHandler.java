@@ -35,7 +35,7 @@ public class CopperChestScreenHandler extends ScreenHandler {
         //Our inventory
         for (m = 0; m < 4; ++m) {
             for (l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(inventory, l + m * 3, l * 18 + 8, m * 18 + 18));
+                this.addSlot(new Slot(inventory, l + m * 9, l * 18 + 8, m * 18 + 18));
             }
         }
         //The player inventory
@@ -80,5 +80,10 @@ public class CopperChestScreenHandler extends ScreenHandler {
         }
 
         return newStack;
+    }
+
+    @Override
+    public void close(PlayerEntity player) {
+        super.close(player);
     }
 }

@@ -32,6 +32,7 @@ public class CopperChestEntity extends BlockEntity implements NamedScreenHandler
     private final AnimationFactory manager = new AnimationFactory(this);
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(36, ItemStack.EMPTY);
 
+
     public CopperChestEntity(BlockPos pos, BlockState state) {
         super(SimpleProgressions.COPPER_CHEST_ENTITY, pos, state);
     }

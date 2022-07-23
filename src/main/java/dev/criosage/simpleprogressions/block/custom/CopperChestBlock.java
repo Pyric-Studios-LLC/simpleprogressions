@@ -1,5 +1,6 @@
 package dev.criosage.simpleprogressions.block.custom;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import dev.criosage.simpleprogressions.block.entity.CopperChestEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -13,6 +14,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -20,7 +22,8 @@ import net.minecraft.world.World;
 import java.util.stream.Stream;
 
 public class CopperChestBlock extends BlockWithEntity {
-    public static final DirectionProperty FACING = Properties.FACING;
+    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+
     public CopperChestBlock(Settings settings) {
         super(settings.nonOpaque());
     }
@@ -36,13 +39,22 @@ public class CopperChestBlock extends BlockWithEntity {
         //With inheriting from BlockWithEntity this defaults to INVISIBLE, so we need to change that!
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
+    @Override
+    public BlockState rotate(BlockState state, BlockRotation rotation) {
+        return state.with(FACING, rotation.rotate(state.get(FACING)));
+    }
+
+    @Override
+    public BlockState mirror(BlockState state, BlockMirror mirror) {
+        return state.rotate(mirror.getRotation(state.get(FACING)));
+    }
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext context) {
-        return this.getDefaultState().with(FACING, context.getPlayerLookDirection().getOpposite());
+        return this.getDefaultState().with(FACING, context.getPlayerFacing().getOpposite());
     }
 
     @Override
