@@ -2,6 +2,7 @@ package dev.criosage.simpleprogressions;
 
 import dev.criosage.simpleprogressions.block.custom.CopperChestBlock;
 import dev.criosage.simpleprogressions.block.entity.CopperChestEntity;
+import dev.criosage.simpleprogressions.item.custom.CopperChestItem;
 import dev.criosage.simpleprogressions.screenhandler.CopperChestScreenHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -22,8 +23,6 @@ import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static dev.criosage.simpleprogressions.item.ModItems.registerItems;
-
 public class SimpleProgressions implements ModInitializer {
 	public static final String MOD_ID = "simpleprogressions";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -43,7 +42,7 @@ public class SimpleProgressions implements ModInitializer {
 				new CopperChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST)));
 		COPPER_CHEST_ITEM = Registry.register(Registry.ITEM,
 				COPPER_CHEST_ID,
-				new BlockItem(COPPER_CHEST_BLOCK, new Item.Settings().group(SimpleProgressionsItemGroup)));
+				new CopperChestItem(COPPER_CHEST_BLOCK, new Item.Settings().group(SimpleProgressionsItemGroup)));
 		COPPER_CHEST_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE,
 				COPPER_CHEST_ID,
 				FabricBlockEntityTypeBuilder.create(CopperChestEntity::new, COPPER_CHEST_BLOCK).build(null));

@@ -15,6 +15,10 @@ public class CopperChestScreen extends HandledScreen<CopperChestScreenHandler> {
 
     public CopperChestScreen(CopperChestScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
+        this.backgroundWidth = 176;
+        this.backgroundHeight = 184;
+        this.playerInventoryTitleX = 8;
+        this.playerInventoryTitleY = 91;
     }
 
     @Override
