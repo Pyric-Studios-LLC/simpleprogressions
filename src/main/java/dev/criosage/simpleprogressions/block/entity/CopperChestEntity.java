@@ -43,7 +43,6 @@ public class CopperChestEntity extends BlockEntity implements NamedScreenHandler
     @Override
     public DefaultedList<ItemStack> getItems() {
         return inventory;
-
     }
 
     //These Methods are from the NamedScreenHandlerFactory Interface
