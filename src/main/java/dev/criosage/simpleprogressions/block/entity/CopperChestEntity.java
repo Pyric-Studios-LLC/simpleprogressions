@@ -15,10 +15,12 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import software.bernie.example.block.tile.FertilizerTileEntity;
+import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -31,8 +33,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class CopperChestEntity extends BlockEntity implements NamedScreenHandlerFactory, ImplementedInventory, IAnimatable {
     private final AnimationFactory manager = new AnimationFactory(this);
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(36, ItemStack.EMPTY);
-
-
+    public PlayerEntity usingPlayer;
     public CopperChestEntity(BlockPos pos, BlockState state) {
         super(SimpleProgressions.COPPER_CHEST_ENTITY, pos, state);
     }
@@ -44,6 +45,8 @@ public class CopperChestEntity extends BlockEntity implements NamedScreenHandler
     public DefaultedList<ItemStack> getItems() {
         return inventory;
     }
+
+
 
     //These Methods are from the NamedScreenHandlerFactory Interface
     //createMenu creates the ScreenHandler itself
@@ -73,9 +76,15 @@ public class CopperChestEntity extends BlockEntity implements NamedScreenHandler
         Inventories.writeNbt(nbt, this.inventory);
     }
     //Geckolib stuff
+    AnimationController<CopperChestEntity> controller;
     private <E extends BlockEntity & IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        AnimationController<?> controller = event.getController();
+        AnimationController<CopperChestEntity> controller = event.getController();
         controller.transitionLengthTicks = 0;
+        controller.setAnimation(new AnimationBuilder());
+        if(usingPlayer == null) return  PlayState.CONTINUE;
+        if(usingPlayer.currentScreenHandler instanceof CopperChestScreenHandler)
+            controller.setAnimation(new AnimationBuilder().addAnimation("animation.iron_chest.open", true));
+        else controller.setAnimation(new AnimationBuilder().addAnimation("animation.iron_chest.close"));
         return  PlayState.CONTINUE;
     }
     @Override

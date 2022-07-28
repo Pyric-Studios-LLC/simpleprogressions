@@ -1,5 +1,6 @@
 package dev.criosage.simpleprogressions;
 
+import dev.criosage.simpleprogressions.block.entity.CopperChestEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;

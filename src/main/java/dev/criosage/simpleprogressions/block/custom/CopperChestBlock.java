@@ -23,17 +23,13 @@ import java.util.stream.Stream;
 
 public class CopperChestBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
-
     public CopperChestBlock(Settings settings) {
         super(settings.nonOpaque());
     }
-    public boolean isOpen = false;
-
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new CopperChestEntity(pos, state);
     }
-
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         //With inheriting from BlockWithEntity this defaults to INVISIBLE, so we need to change that!
@@ -43,7 +39,6 @@ public class CopperChestBlock extends BlockWithEntity {
     public BlockState rotate(BlockState state, BlockRotation rotation) {
         return state.with(FACING, rotation.rotate(state.get(FACING)));
     }
-
     @Override
     public BlockState mirror(BlockState state, BlockMirror mirror) {
         return state.rotate(mirror.getRotation(state.get(FACING)));
@@ -56,7 +51,6 @@ public class CopperChestBlock extends BlockWithEntity {
     public BlockState getPlacementState(ItemPlacementContext context) {
         return this.getDefaultState().with(FACING, context.getPlayerFacing().getOpposite());
     }
-
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
@@ -69,11 +63,10 @@ public class CopperChestBlock extends BlockWithEntity {
                 player.openHandledScreen(screenHandlerFactory);
             }
         }
+        CopperChestEntity copperChestEntity = (CopperChestEntity) world.getBlockEntity(pos);
+        copperChestEntity.usingPlayer = player;
         return ActionResult.SUCCESS;
     }
-
-
-
     //This method will drop all items onto the ground when the block is broken
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
@@ -87,12 +80,10 @@ public class CopperChestBlock extends BlockWithEntity {
             super.onStateReplaced(state, world, pos, newState, moved);
         }
     }
-
     @Override
     public boolean hasComparatorOutput(BlockState state) {
         return true;
     }
-
     @Override
     public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
         return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
