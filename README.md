@@ -12,6 +12,16 @@ Goal : Add progression to multiple block entities into minecraft.
 
 0.3.0 : Planned to release barrel progression.
 
+0.4.0 : Planned to release shulker progression.
+
+0.5.0 : Planned to release feature config.
+
+## Current mod progress
+- Refining copper chests until ready to expand
+
+## Current known bugs
+- On Esc chests auto open for approximately 30 seconds, needs improvements to if blocks in predicate
+
 ## License
 
 Copyright 2022 Jonathon Prugel

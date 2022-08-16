@@ -11,6 +11,9 @@ import net.minecraft.screen.slot.Slot;
 
 public class CopperChestScreenHandler extends ScreenHandler {
     private final Inventory inventory;
+    public Inventory getInventory() {
+        return this.inventory;
+    }
 
     //This constructor gets called on the client when the server wants it to open the screenHandler,
     //The client will call the other constructor with an empty Inventory and the screenHandler will automatically

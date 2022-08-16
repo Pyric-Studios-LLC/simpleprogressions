@@ -18,6 +18,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.stat.StatFormatter;
+import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
@@ -48,6 +50,12 @@ public class SimpleProgressions implements ModInitializer {
 				FabricBlockEntityTypeBuilder.create(CopperChestEntity::new, COPPER_CHEST_BLOCK).build(null));
 		COPPER_CHEST_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(COPPER_CHEST_ID,
 				CopperChestScreenHandler::new);
+	}
+	//Stats
+	public static final Identifier OPEN_COPPER_CHEST = new Identifier(MOD_ID, "open_copper_chest");
+	static {
+		Registry.register(Registry.CUSTOM_STAT, "open_copper_chest", OPEN_COPPER_CHEST);
+		Stats.CUSTOM.getOrCreateStat(OPEN_COPPER_CHEST, StatFormatter.DEFAULT);
 	}
 	@Override
 	public void onInitialize() {

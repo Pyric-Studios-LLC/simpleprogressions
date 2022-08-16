@@ -1,91 +1,120 @@
 package dev.criosage.simpleprogressions.block.custom;
 
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import dev.criosage.simpleprogressions.SimpleProgressions;
 import dev.criosage.simpleprogressions.block.entity.CopperChestEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.PiglinBrain;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.state.property.Property;
 import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
-
-import java.util.stream.Stream;
+import org.jetbrains.annotations.Nullable;
 
 public class CopperChestBlock extends BlockWithEntity {
-    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
-    public CopperChestBlock(Settings settings) {
+    public static final DirectionProperty FACING;
+    public static final BooleanProperty OPEN;
+
+    public CopperChestBlock(AbstractBlock.Settings settings) {
         super(settings.nonOpaque());
-    }
-    @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new CopperChestEntity(pos, state);
-    }
-    @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        //With inheriting from BlockWithEntity this defaults to INVISIBLE, so we need to change that!
-        return BlockRenderType.ENTITYBLOCK_ANIMATED;
-    }
-    @Override
-    public BlockState rotate(BlockState state, BlockRotation rotation) {
-        return state.with(FACING, rotation.rotate(state.get(FACING)));
-    }
-    @Override
-    public BlockState mirror(BlockState state, BlockMirror mirror) {
-        return state.rotate(mirror.getRotation(state.get(FACING)));
-    }
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH)).with(OPEN, false));
     }
 
-    @Override
-    public BlockState getPlacementState(ItemPlacementContext context) {
-        return this.getDefaultState().with(FACING, context.getPlayerFacing().getOpposite());
-    }
-    @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient) {
-            //This will call the createScreenHandlerFactory method from BlockWithEntity, which will return our blockEntity casted to
-            //a namedScreenHandlerFactory. If your block class does not extend BlockWithEntity, it needs to implement createScreenHandlerFactory.
-            NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
-
-            if (screenHandlerFactory != null) {
-                //With this call the server will request the client to open the appropriate Screenhandler
-                player.openHandledScreen(screenHandlerFactory);
-            }
-        }
-        CopperChestEntity copperChestEntity = (CopperChestEntity) world.getBlockEntity(pos);
-        copperChestEntity.usingPlayer = player;
-        return ActionResult.SUCCESS;
-    }
-    //This method will drop all items onto the ground when the block is broken
-    @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (state.getBlock() != newState.getBlock()) {
+        if (world.isClient) {
+            return ActionResult.SUCCESS;
+        } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof CopperChestEntity) {
-                ItemScatterer.spawn(world, pos, (CopperChestEntity)blockEntity);
-                // update comparators
-                world.updateComparators(pos,this);
+                player.openHandledScreen((CopperChestEntity)blockEntity);
+                player.incrementStat(SimpleProgressions.OPEN_COPPER_CHEST);
+                PiglinBrain.onGuardedBlockInteracted(player, true);
             }
+
+            return ActionResult.CONSUME;
+        }
+    }
+
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (!state.isOf(newState.getBlock())) {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof Inventory) {
+                ItemScatterer.spawn(world, pos, (Inventory)blockEntity);
+                world.updateComparators(pos, this);
+            }
+
             super.onStateReplaced(state, world, pos, newState, moved);
         }
     }
-    @Override
+
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity instanceof CopperChestEntity) {
+            ((CopperChestEntity)blockEntity).tick();
+        }
+
+    }
+
+    @Nullable
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new CopperChestEntity(pos, state);
+    }
+
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.ENTITYBLOCK_ANIMATED;
+    }
+
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        if (itemStack.hasCustomName()) {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof CopperChestEntity) {
+                ((CopperChestEntity)blockEntity).setCustomName(itemStack.getName());
+            }
+        }
+
+    }
+
     public boolean hasComparatorOutput(BlockState state) {
         return true;
     }
-    @Override
+
     public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
         return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
+    }
+
+    public BlockState rotate(BlockState state, BlockRotation rotation) {
+        return (BlockState)state.with(FACING, rotation.rotate((Direction)state.get(FACING)));
+    }
+
+    public BlockState mirror(BlockState state, BlockMirror mirror) {
+        return state.rotate(mirror.getRotation((Direction)state.get(FACING)));
+    }
+
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(new Property[]{FACING, OPEN});
+    }
+
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        return (BlockState)this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
+    }
+
+    static {
+        FACING = HorizontalFacingBlock.FACING;
+        OPEN = Properties.OPEN;
     }
 }
