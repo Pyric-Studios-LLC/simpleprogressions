@@ -6,7 +6,7 @@ Goal : Add progression to multiple block entities into minecraft.
 
 ## Development Life Cycle
 
-0.1.0 : Planned to release chest progression.
+~~0.1.0 : Planned to release chest progression.~~
 
 0.2.0 : Planned to release item progression.
 
@@ -17,7 +17,8 @@ Goal : Add progression to multiple block entities into minecraft.
 0.5.0 : Planned to release feature config.
 
 ## Current mod progress
-- Refining copper chests until ready to expand
+- Added all chests.
+- Completed version 0.1.0
 
 ## Current known bugs
 - On Esc chests auto open for approximately 30 seconds, needs improvements to if blocks in predicate

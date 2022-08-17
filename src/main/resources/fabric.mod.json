@@ -4,17 +4,17 @@
   "version": "${version}",
 
   "name": "Simple Progressions",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "Add progression to multiple block entities into minecraft.",
   "authors": [
-    "Me!"
+    "criosage"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/jprugel",
+    "sources": "https://github.com/jprugel/simpleprogressions"
   },
 
-  "license": "CC0-1.0",
-  "icon": "assets/simpleprogressions/icon.png",
+  "license": "MIT",
+  "icon": "assets/simpleprogressions/copper_chest_icon.png",
 
   "environment": "*",
   "entrypoints": {
