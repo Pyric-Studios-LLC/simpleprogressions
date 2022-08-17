@@ -9,8 +9,6 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import software.bernie.example.block.tile.FertilizerTileEntity;
-import software.bernie.example.registry.TileRegistry;
 import software.bernie.geckolib3.renderers.geo.GeoItemRenderer;
 
 @Environment(EnvType.CLIENT)
