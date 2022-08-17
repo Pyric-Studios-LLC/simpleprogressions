@@ -1,8 +1,11 @@
 package dev.criosage.simpleprogressions;
 
 import dev.criosage.simpleprogressions.block.renderer.CopperChestRenderer;
+import dev.criosage.simpleprogressions.block.renderer.IronChestRenderer;
 import dev.criosage.simpleprogressions.item.renderer.CopperChestItemRenderer;
+import dev.criosage.simpleprogressions.item.renderer.IronChestItemRenderer;
 import dev.criosage.simpleprogressions.screenhandler.CopperChestScreen;
+import dev.criosage.simpleprogressions.screenhandler.IronChestScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -20,5 +23,9 @@ public class SimpleProgressionsClient implements ClientModInitializer {
         GeoItemRenderer.registerItemRenderer(SimpleProgressions.COPPER_CHEST_ITEM, new CopperChestItemRenderer());
         BlockEntityRendererRegistry.register(SimpleProgressions.COPPER_CHEST_ENTITY, (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new CopperChestRenderer());
         ScreenRegistry.register(SimpleProgressions.COPPER_CHEST_SCREEN_HANDLER, CopperChestScreen::new);
+
+        GeoItemRenderer.registerItemRenderer(SimpleProgressions.IRON_CHEST_ITEM, new IronChestItemRenderer());
+        BlockEntityRendererRegistry.register(SimpleProgressions.IRON_CHEST_ENTITY, (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new IronChestRenderer());
+        ScreenRegistry.register(SimpleProgressions.IRON_CHEST_SCREEN_HANDLER, IronChestScreen::new);
     }
 }

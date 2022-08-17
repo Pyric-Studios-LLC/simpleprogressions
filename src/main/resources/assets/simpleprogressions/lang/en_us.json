@@ -1,3 +1,5 @@
 {
-  "block.simpleprogressions.copper_chest" : "Copper Chest"
+  "itemGroup.simpleprogressions.itemgroup" : "Simple Progressions",
+  "block.simpleprogressions.copper_chest" : "Copper Chest",
+  "block.simpleprogressions.iron_chest" : "Iron Chest"
 }
