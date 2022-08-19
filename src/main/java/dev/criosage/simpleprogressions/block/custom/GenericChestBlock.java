@@ -1,7 +1,6 @@
 package dev.criosage.simpleprogressions.block.custom;
 
-import dev.criosage.simpleprogressions.SimpleProgressions;
-import dev.criosage.simpleprogressions.block.entity.DiamondChestEntity;
+import dev.criosage.simpleprogressions.block.entity.GenericChestEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
@@ -25,13 +24,15 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class DiamondChestBlock extends BlockWithEntity {
-    public static final DirectionProperty FACING;
-    public static final BooleanProperty OPEN;
+public class GenericChestBlock extends BlockWithEntity {
+    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+    public static final BooleanProperty OPEN = Properties.OPEN;
+    public ChestType type;
 
-    public DiamondChestBlock(Settings settings) {
+    public GenericChestBlock(Settings settings, ChestType type) {
         super(settings.nonOpaque());
         this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH)).with(OPEN, false));
+        this.type = type;
     }
 
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
@@ -39,9 +40,9 @@ public class DiamondChestBlock extends BlockWithEntity {
             return ActionResult.SUCCESS;
         } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof DiamondChestEntity) {
-                player.openHandledScreen((DiamondChestEntity)blockEntity);
-                player.incrementStat(SimpleProgressions.OPEN_DIAMOND_CHEST);
+            if (blockEntity instanceof GenericChestEntity) {
+                player.openHandledScreen((GenericChestEntity)blockEntity);
+                player.incrementStat(ChestType.getStatIdentifier(type));
                 PiglinBrain.onGuardedBlockInteracted(player, true);
             }
 
@@ -63,15 +64,15 @@ public class DiamondChestBlock extends BlockWithEntity {
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof DiamondChestEntity) {
-            ((DiamondChestEntity)blockEntity).tick();
+        if (blockEntity instanceof GenericChestEntity) {
+            ((GenericChestEntity)blockEntity).tick();
         }
 
     }
 
     @Nullable
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new DiamondChestEntity(pos, state);
+        return new GenericChestEntity(pos, state, type);
     }
 
     public BlockRenderType getRenderType(BlockState state) {
@@ -81,8 +82,8 @@ public class DiamondChestBlock extends BlockWithEntity {
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         if (itemStack.hasCustomName()) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof DiamondChestEntity) {
-                ((DiamondChestEntity)blockEntity).setCustomName(itemStack.getName());
+            if (blockEntity instanceof GenericChestEntity) {
+                ((GenericChestEntity)blockEntity).setCustomName(itemStack.getName());
             }
         }
 
@@ -112,8 +113,5 @@ public class DiamondChestBlock extends BlockWithEntity {
         return (BlockState)this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
     }
 
-    static {
-        FACING = HorizontalFacingBlock.FACING;
-        OPEN = Properties.OPEN;
-    }
+
 }

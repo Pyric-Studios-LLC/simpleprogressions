@@ -1,6 +1,7 @@
 package dev.criosage.simpleprogressions.screenhandler;
 
 import dev.criosage.simpleprogressions.SimpleProgressions;
+import dev.criosage.simpleprogressions.block.custom.ChestType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -9,24 +10,25 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 
-public class IronChestScreenHandler extends ScreenHandler {
+public class GenericContainerScreenHandler extends ScreenHandler {
     private final Inventory inventory;
     public Inventory getInventory() {
         return this.inventory;
     }
+    private static ChestType type;
 
     //This constructor gets called on the client when the server wants it to open the screenHandler,
     //The client will call the other constructor with an empty Inventory and the screenHandler will automatically
     //sync this empty inventory with the inventory on the server.
-    public IronChestScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, new SimpleInventory(54));
+    public GenericContainerScreenHandler(int syncId, PlayerInventory playerInventory, ChestType type) {
+        this(syncId, playerInventory, new SimpleInventory(type.getSize()), type);
     }
 
     //This constructor gets called from the BlockEntity on the server without calling the other constructor first, the server knows the inventory of the container
     //and can therefore directly provide it as an argument. This inventory will then be synced to the client.
-    public IronChestScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
-        super(SimpleProgressions.IRON_CHEST_SCREEN_HANDLER, syncId);
-        checkSize(inventory, 54);
+    public GenericContainerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, ChestType type) {
+        super(ChestType.getScreenHandler(type), syncId);
+        checkSize(inventory, type.getSize());
         this.inventory = inventory;
         //some inventories do custom logic when a player opens it.
         inventory.onOpen(playerInventory.player);
@@ -36,20 +38,20 @@ public class IronChestScreenHandler extends ScreenHandler {
         int m;
         int l;
         //Our inventory
-        for (m = 0; m < 6; ++m) {
-            for (l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(inventory, l + m * 9, l * 18 + 8, m * 18 + 18));
+        for (m = 0; m < type.getRows(); ++m) {
+            for (l = 0; l < type.getCols(); ++l) {
+                this.addSlot(new Slot(inventory, l + m * type.getCols(), l * 18 + 8, m * 18 + type.getmOurInvSalt()));
             }
         }
         //The player inventory
         for (m = 0; m < 3; ++m) {
             for (l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + m * 9 + 9, 8 + l * 18, 138 + m * 18));
+                this.addSlot(new Slot(playerInventory, l + m * 9 + 9, type.getLPlaInvSalt() + l * 18, type.getmPlaInvSalt() + m * 18));
             }
         }
         //The player Hotbar
         for (m = 0; m < 9; ++m) {
-            this.addSlot(new Slot(playerInventory, m, 8 + m * 18, 196));
+            this.addSlot(new Slot(playerInventory, m, type.getLHotInvSalt() + m * 18, type.getMHotInvSalt()));
         }
 
     }

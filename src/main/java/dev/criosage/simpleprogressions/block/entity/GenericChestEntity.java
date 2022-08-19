@@ -1,8 +1,8 @@
 package dev.criosage.simpleprogressions.block.entity;
 
-import dev.criosage.simpleprogressions.SimpleProgressions;
-import dev.criosage.simpleprogressions.block.custom.DiamondChestBlock;
-import dev.criosage.simpleprogressions.screenhandler.DiamondChestScreenHandler;
+import dev.criosage.simpleprogressions.block.custom.ChestType;
+import dev.criosage.simpleprogressions.block.custom.GenericChestBlock;
+import dev.criosage.simpleprogressions.screenhandler.GenericContainerScreenHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
@@ -31,36 +31,38 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class DiamondChestEntity extends LootableContainerBlockEntity implements IAnimatable {
+public class GenericChestEntity extends LootableContainerBlockEntity implements IAnimatable {
     private DefaultedList<ItemStack> inventory;
     private ViewerCountManager stateManager;
+    public ChestType type;
 
-    public DiamondChestEntity(BlockPos pos, BlockState state) {
-        super(SimpleProgressions.DIAMOND_CHEST_ENTITY, pos, state);
-        this.inventory = DefaultedList.ofSize(88, ItemStack.EMPTY);
+    public GenericChestEntity(BlockPos pos, BlockState state, ChestType type) {
+        super(ChestType.getBlockEntityType(type), pos, state);
+        this.inventory = DefaultedList.ofSize(type.getSize(), ItemStack.EMPTY);
         this.stateManager = new ViewerCountManager() {
             protected void onContainerOpen(World world, BlockPos pos, BlockState state) {
-                DiamondChestEntity.this.playSound(state, SoundEvents.BLOCK_BARREL_OPEN);
-                DiamondChestEntity.this.setOpen(state, true);
+                dev.criosage.simpleprogressions.block.entity.GenericChestEntity.this.playSound(state, SoundEvents.BLOCK_BARREL_OPEN);
+                dev.criosage.simpleprogressions.block.entity.GenericChestEntity.this.setOpen(state, true);
             }
 
             protected void onContainerClose(World world, BlockPos pos, BlockState state) {
-                DiamondChestEntity.this.playSound(state, SoundEvents.BLOCK_BARREL_CLOSE);
-                DiamondChestEntity.this.setOpen(state, false);
+                dev.criosage.simpleprogressions.block.entity.GenericChestEntity.this.playSound(state, SoundEvents.BLOCK_BARREL_CLOSE);
+                dev.criosage.simpleprogressions.block.entity.GenericChestEntity.this.setOpen(state, false);
             }
 
             protected void onViewerCountUpdate(World world, BlockPos pos, BlockState state, int oldViewerCount, int newViewerCount) {
             }
 
             protected boolean isPlayerViewing(PlayerEntity player) {
-                if (player.currentScreenHandler instanceof DiamondChestScreenHandler) {
-                    Inventory inventory = ((DiamondChestScreenHandler)player.currentScreenHandler).getInventory();
-                    return inventory == DiamondChestEntity.this;
+                if (player.currentScreenHandler instanceof GenericContainerScreenHandler) {
+                    Inventory inventory = ((GenericContainerScreenHandler)player.currentScreenHandler).getInventory();
+                    return inventory == dev.criosage.simpleprogressions.block.entity.GenericChestEntity.this;
                 } else {
                     return false;
                 }
             }
         };
+        this.type = type;
     }
 
     protected void writeNbt(NbtCompound nbt) {
@@ -81,7 +83,7 @@ public class DiamondChestEntity extends LootableContainerBlockEntity implements 
     }
 
     public int size() {
-        return 88;
+        return this.type.getSize();
     }
 
     protected DefaultedList<ItemStack> getInvStackList() {
@@ -97,7 +99,7 @@ public class DiamondChestEntity extends LootableContainerBlockEntity implements 
     }
 
     protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-        return new DiamondChestScreenHandler(syncId, playerInventory, this);
+        return new GenericContainerScreenHandler(syncId, playerInventory, this, type);
     }
 
     public void onOpen(PlayerEntity player) {
@@ -121,11 +123,11 @@ public class DiamondChestEntity extends LootableContainerBlockEntity implements 
     }
 
     void setOpen(BlockState state, boolean open) {
-        this.world.setBlockState(this.getPos(), (BlockState)state.with(DiamondChestBlock.OPEN, open), 3);
+        this.world.setBlockState(this.getPos(), (BlockState)state.with(GenericChestBlock.OPEN, open), 3);
     }
 
     void playSound(BlockState state, SoundEvent soundEvent) {
-        Vec3i vec3i = ((Direction)state.get(DiamondChestBlock.FACING)).getVector();
+        Vec3i vec3i = ((Direction)state.get(GenericChestBlock.FACING)).getVector();
         double d = (double)this.pos.getX() + 0.5 + (double)vec3i.getX() / 2.0;
         double e = (double)this.pos.getY() + 0.5 + (double)vec3i.getY() / 2.0;
         double f = (double)this.pos.getZ() + 0.5 + (double)vec3i.getZ() / 2.0;
@@ -134,22 +136,22 @@ public class DiamondChestEntity extends LootableContainerBlockEntity implements 
     //region GeckoLib Animation
     private final AnimationFactory factory = new AnimationFactory(this);
     private <E extends BlockEntity & IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        AnimationController<DiamondChestEntity> controller = event.getController();
+        AnimationController<GenericChestEntity> controller = event.getController();
         controller.transitionLengthTicks = 0;
         if(this.isRemoved()) return PlayState.CONTINUE;
-        if(this.getWorld().getBlockState(this.getPos()).get(DiamondChestBlock.OPEN)) {
-            controller.setAnimation(new AnimationBuilder().addAnimation("animation.diamond_chest.open", false)
-                    .addAnimation("animation.diamond_chest.opened", true));
+        if(this.getWorld().getBlockState(this.getPos()).get(GenericChestBlock.OPEN)) {
+            controller.setAnimation(new AnimationBuilder().addAnimation(ChestType.getSpecificAnimation(type) + ".open", false)
+                    .addAnimation(ChestType.getSpecificAnimation(type) + ".opened", true));
         }
-        if(!this.getWorld().getBlockState(this.getPos()).get(DiamondChestBlock.OPEN)) {
-            controller.setAnimation(new AnimationBuilder().addAnimation("animation.diamond_chest.close", false));
+        if(!this.getWorld().getBlockState(this.getPos()).get(GenericChestBlock.OPEN)) {
+            controller.setAnimation(new AnimationBuilder().addAnimation(ChestType.getSpecificAnimation(type) + ".close", false));
         }
         return PlayState.CONTINUE;
     }
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(
-                new AnimationController<DiamondChestEntity>(this, "controller", 0, this::predicate));
+                new AnimationController<GenericChestEntity>(this, "controller", 0, this::predicate));
     }
     @Override
     public AnimationFactory getFactory() {
