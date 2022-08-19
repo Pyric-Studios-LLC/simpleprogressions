@@ -1,8 +1,11 @@
 package dev.criosage.simpleprogressions.block.custom;
 
 import dev.criosage.simpleprogressions.SimpleProgressions;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.stat.Stats;
@@ -114,6 +117,16 @@ public enum ContainerType {
         this.lHotInvSalt = lHotInvSalt;
         this.guiTitleX = guiTitleX;
         this.guiTitleY = guiTitleY;
+    }
+    public static AbstractBlock.Settings getSettings(ContainerType type) {
+        return switch (type) {
+            case COPPER -> FabricBlockSettings.copyOf(Blocks.CHEST).nonOpaque().strength(3f);
+            case IRON -> FabricBlockSettings.copyOf(Blocks.CHEST).nonOpaque().strength(5f);
+            case GOLD -> FabricBlockSettings.copyOf(Blocks.CHEST).nonOpaque().strength(3f);
+            case DIAMOND -> FabricBlockSettings.copyOf(Blocks.CHEST).nonOpaque().strength(6f);
+            case NETHERITE -> FabricBlockSettings.copyOf(Blocks.CHEST).nonOpaque().strength(50f);
+            default -> FabricBlockSettings.copyOf(Blocks.CHEST).nonOpaque();
+        };
     }
 
     public static Block getBlockType(ContainerType type) {

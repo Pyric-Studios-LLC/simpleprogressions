@@ -30,7 +30,7 @@ public class GenericChestBlock extends BlockWithEntity {
     public ContainerType type;
 
     public GenericChestBlock(Settings settings, ContainerType type) {
-        super(settings.nonOpaque());
+        super(ContainerType.getSettings(type));
         this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH)).with(OPEN, false));
         this.type = type;
     }
