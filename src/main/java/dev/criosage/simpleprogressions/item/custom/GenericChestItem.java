@@ -1,6 +1,6 @@
 package dev.criosage.simpleprogressions.item.custom;
 
-import dev.criosage.simpleprogressions.block.custom.ChestType;
+import dev.criosage.simpleprogressions.block.custom.ContainerType;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -12,9 +12,9 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class GenericChestItem extends BlockItem implements IAnimatable {
     public AnimationFactory factory = new AnimationFactory(this);
-    public ChestType type;
+    public ContainerType type;
 
-    public GenericChestItem(Block block, Settings settings, ChestType type){
+    public GenericChestItem(Block block, Settings settings, ContainerType type){
         super(block, settings);
         this.type = type;
     }

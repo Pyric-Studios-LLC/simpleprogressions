@@ -2,7 +2,7 @@ package dev.criosage.simpleprogressions.screenhandler;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import dev.criosage.simpleprogressions.SimpleProgressions;
-import dev.criosage.simpleprogressions.block.custom.ChestType;
+import dev.criosage.simpleprogressions.block.custom.ContainerType;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -12,8 +12,8 @@ import net.minecraft.util.Identifier;
 
 public class GenericContainerScreen extends HandledScreen<GenericContainerScreenHandler> {
     //A path to the gui texture. In this example we use the texture from the dispenser
-    ChestType type;
-    private static Identifier Texture(ChestType type) {
+    ContainerType type;
+    private static Identifier Texture(ContainerType type) {
         return switch (type) {
             case COPPER -> new Identifier(SimpleProgressions.MOD_ID, "textures/gui/container/generic_36.png");
             case IRON -> new Identifier(SimpleProgressions.MOD_ID, "textures/gui/container/generic_54.png");
@@ -24,7 +24,7 @@ public class GenericContainerScreen extends HandledScreen<GenericContainerScreen
         };
     }
 
-    public GenericContainerScreen(GenericContainerScreenHandler handler, PlayerInventory inventory, Text title, ChestType type) {
+    public GenericContainerScreen(GenericContainerScreenHandler handler, PlayerInventory inventory, Text title, ContainerType type) {
         super(handler, inventory, title);
         this.backgroundWidth = type.getGuiBackgroundWidth();
         this.backgroundHeight = type.getGuiBackgroundHeight();

@@ -1,6 +1,6 @@
 package dev.criosage.simpleprogressions;
 
-import dev.criosage.simpleprogressions.block.custom.ChestType;
+import dev.criosage.simpleprogressions.block.custom.ContainerType;
 import dev.criosage.simpleprogressions.block.renderer.*;
 import dev.criosage.simpleprogressions.item.renderer.*;
 import dev.criosage.simpleprogressions.screenhandler.*;
@@ -21,31 +21,31 @@ public class SimpleProgressionsClient implements ClientModInitializer {
         GeoItemRenderer.registerItemRenderer(SimpleProgressions.COPPER_CHEST_ITEM, new GenericChestItemRenderer());
         BlockEntityRendererRegistry.register(SimpleProgressions.COPPER_CHEST_ENTITY, (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new GenericChestRenderer());
         ScreenRegistry.register(SimpleProgressions.COPPER_CHEST_SCREEN_HANDLER, (GenericContainerScreenHandler handler, PlayerInventory inventory, Text title) -> {
-            return new GenericContainerScreen(handler, inventory, title, ChestType.COPPER);
+            return new GenericContainerScreen(handler, inventory, title, ContainerType.COPPER);
         });
 
         GeoItemRenderer.registerItemRenderer(SimpleProgressions.IRON_CHEST_ITEM, new GenericChestItemRenderer());
         BlockEntityRendererRegistry.register(SimpleProgressions.IRON_CHEST_ENTITY, (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new GenericChestRenderer());
         ScreenRegistry.register(SimpleProgressions.IRON_CHEST_SCREEN_HANDLER, (GenericContainerScreenHandler handler, PlayerInventory inventory, Text title) -> {
-            return new GenericContainerScreen(handler, inventory, title, ChestType.IRON);
+            return new GenericContainerScreen(handler, inventory, title, ContainerType.IRON);
         });
 
         GeoItemRenderer.registerItemRenderer(SimpleProgressions.GOLD_CHEST_ITEM, new GenericChestItemRenderer());
         BlockEntityRendererRegistry.register(SimpleProgressions.GOLD_CHEST_ENTITY, (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new GenericChestRenderer());
         ScreenRegistry.register(SimpleProgressions.GOLD_CHEST_SCREEN_HANDLER, (GenericContainerScreenHandler handler, PlayerInventory inventory, Text title) -> {
-            return new GenericContainerScreen(handler, inventory, title, ChestType.GOLD);
+            return new GenericContainerScreen(handler, inventory, title, ContainerType.GOLD);
         });
 
         GeoItemRenderer.registerItemRenderer(SimpleProgressions.DIAMOND_CHEST_ITEM, new GenericChestItemRenderer());
         BlockEntityRendererRegistry.register(SimpleProgressions.DIAMOND_CHEST_ENTITY, (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new GenericChestRenderer());
         ScreenRegistry.register(SimpleProgressions.DIAMOND_CHEST_SCREEN_HANDLER, (GenericContainerScreenHandler handler, PlayerInventory inventory, Text title) -> {
-            return new GenericContainerScreen(handler, inventory, title, ChestType.DIAMOND);
+            return new GenericContainerScreen(handler, inventory, title, ContainerType.DIAMOND);
         });
 
         GeoItemRenderer.registerItemRenderer(SimpleProgressions.NETHERITE_CHEST_ITEM, new GenericChestItemRenderer());
         BlockEntityRendererRegistry.register(SimpleProgressions.NETHERITE_CHEST_ENTITY, (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new GenericChestRenderer());
         ScreenRegistry.register(SimpleProgressions.NETHERITE_CHEST_SCREEN_HANDLER, (GenericContainerScreenHandler handler, PlayerInventory inventory, Text title) -> {
-            return new GenericContainerScreen(handler, inventory, title, ChestType.NETHERITE);
+            return new GenericContainerScreen(handler, inventory, title, ContainerType.NETHERITE);
         });
     }
 }

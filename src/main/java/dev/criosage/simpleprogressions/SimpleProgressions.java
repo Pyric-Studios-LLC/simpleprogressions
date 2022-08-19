@@ -6,7 +6,6 @@ import dev.criosage.simpleprogressions.item.custom.*;
 import dev.criosage.simpleprogressions.screenhandler.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
@@ -43,20 +42,20 @@ public class SimpleProgressions implements ModInitializer {
 	static {
 		COPPER_CHEST_BLOCK = Registry.register(Registry.BLOCK,
 				COPPER_CHEST_ID,
-				new GenericChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST), ChestType.COPPER));
+				new GenericChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST), ContainerType.COPPER));
 		SimpleProgressionsItemGroup = FabricItemGroupBuilder.build(
 				new Identifier("simpleprogressions", "itemgroup"),
 				() -> new ItemStack(SimpleProgressions.COPPER_CHEST_ITEM));
 		COPPER_CHEST_ITEM = Registry.register(Registry.ITEM,
 				COPPER_CHEST_ID,
-				new GenericChestItem(COPPER_CHEST_BLOCK, new Item.Settings().group(SimpleProgressionsItemGroup), ChestType.COPPER));
+				new GenericChestItem(COPPER_CHEST_BLOCK, new Item.Settings().group(SimpleProgressionsItemGroup), ContainerType.COPPER));
 		COPPER_CHEST_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE,
 				COPPER_CHEST_ID,
 				FabricBlockEntityTypeBuilder.create((BlockPos pos, BlockState state) -> {
-					return new GenericChestEntity(pos, state, ChestType.COPPER);
+					return new GenericChestEntity(pos, state, ContainerType.COPPER);
 				}, COPPER_CHEST_BLOCK).build(null));
 		COPPER_CHEST_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(COPPER_CHEST_ID, (int syncId, PlayerInventory playerInventory) -> {
-			return new GenericContainerScreenHandler(syncId, playerInventory, ChestType.COPPER);
+			return new GenericContainerScreenHandler(syncId, playerInventory, ContainerType.COPPER);
 		});
 		Registry.register(Registry.CUSTOM_STAT, "open_copper_chest", OPEN_COPPER_CHEST);
 		Stats.CUSTOM.getOrCreateStat(OPEN_COPPER_CHEST, StatFormatter.DEFAULT);
@@ -73,17 +72,17 @@ public class SimpleProgressions implements ModInitializer {
 	static {
 		IRON_CHEST_BLOCK = Registry.register(Registry.BLOCK,
 				IRON_CHEST_ID,
-				new GenericChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST), ChestType.IRON));
+				new GenericChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST), ContainerType.IRON));
 		IRON_CHEST_ITEM = Registry.register(Registry.ITEM,
 				IRON_CHEST_ID,
-				new GenericChestItem(IRON_CHEST_BLOCK, new Item.Settings().group(SimpleProgressionsItemGroup), ChestType.IRON));
+				new GenericChestItem(IRON_CHEST_BLOCK, new Item.Settings().group(SimpleProgressionsItemGroup), ContainerType.IRON));
 		IRON_CHEST_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE,
 				IRON_CHEST_ID,
 				FabricBlockEntityTypeBuilder.create((BlockPos pos, BlockState state) -> {
-					return new GenericChestEntity(pos, state, ChestType.IRON);
+					return new GenericChestEntity(pos, state, ContainerType.IRON);
 				}, IRON_CHEST_BLOCK).build(null));
 		IRON_CHEST_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(IRON_CHEST_ID, (int syncId, PlayerInventory playerInventory) -> {
-					return new GenericContainerScreenHandler(syncId, playerInventory, ChestType.IRON);
+					return new GenericContainerScreenHandler(syncId, playerInventory, ContainerType.IRON);
 				});
 		Registry.register(Registry.CUSTOM_STAT, "open_iron_chest", OPEN_IRON_CHEST);
 		Stats.CUSTOM.getOrCreateStat(OPEN_IRON_CHEST, StatFormatter.DEFAULT);
@@ -100,17 +99,17 @@ public class SimpleProgressions implements ModInitializer {
 	static {
 		GOLD_CHEST_BLOCK = Registry.register(Registry.BLOCK,
 				GOLD_CHEST_ID,
-				new GenericChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST), ChestType.GOLD));
+				new GenericChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST), ContainerType.GOLD));
 		GOLD_CHEST_ITEM = Registry.register(Registry.ITEM,
 				GOLD_CHEST_ID,
-				new GenericChestItem(GOLD_CHEST_BLOCK, new Item.Settings().group(SimpleProgressionsItemGroup), ChestType.GOLD));
+				new GenericChestItem(GOLD_CHEST_BLOCK, new Item.Settings().group(SimpleProgressionsItemGroup), ContainerType.GOLD));
 		GOLD_CHEST_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE,
 				GOLD_CHEST_ID,
 				FabricBlockEntityTypeBuilder.create((BlockPos pos, BlockState state) -> {
-					return new GenericChestEntity(pos, state, ChestType.GOLD);
+					return new GenericChestEntity(pos, state, ContainerType.GOLD);
 				}, GOLD_CHEST_BLOCK).build(null));
 		GOLD_CHEST_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(GOLD_CHEST_ID, (int syncId, PlayerInventory playerInventory) -> {
-			return new GenericContainerScreenHandler(syncId, playerInventory, ChestType.GOLD);
+			return new GenericContainerScreenHandler(syncId, playerInventory, ContainerType.GOLD);
 		});
 		Registry.register(Registry.CUSTOM_STAT, "open_gold_chest", OPEN_GOLD_CHEST);
 		Stats.CUSTOM.getOrCreateStat(OPEN_GOLD_CHEST, StatFormatter.DEFAULT);
@@ -127,17 +126,17 @@ public class SimpleProgressions implements ModInitializer {
 	static {
 		DIAMOND_CHEST_BLOCK = Registry.register(Registry.BLOCK,
 				DIAMOND_CHEST_ID,
-				new GenericChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST), ChestType.DIAMOND));
+				new GenericChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST), ContainerType.DIAMOND));
 		DIAMOND_CHEST_ITEM = Registry.register(Registry.ITEM,
 				DIAMOND_CHEST_ID,
-				new GenericChestItem(DIAMOND_CHEST_BLOCK, new Item.Settings().group(SimpleProgressionsItemGroup), ChestType.DIAMOND));
+				new GenericChestItem(DIAMOND_CHEST_BLOCK, new Item.Settings().group(SimpleProgressionsItemGroup), ContainerType.DIAMOND));
 		DIAMOND_CHEST_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE,
 				DIAMOND_CHEST_ID,
 				FabricBlockEntityTypeBuilder.create((BlockPos pos, BlockState state) -> {
-					return new GenericChestEntity(pos, state, ChestType.DIAMOND);
+					return new GenericChestEntity(pos, state, ContainerType.DIAMOND);
 				}, DIAMOND_CHEST_BLOCK).build(null));
 		DIAMOND_CHEST_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(DIAMOND_CHEST_ID, (int syncId, PlayerInventory playerInventory) -> {
-			return new GenericContainerScreenHandler(syncId, playerInventory, ChestType.DIAMOND);
+			return new GenericContainerScreenHandler(syncId, playerInventory, ContainerType.DIAMOND);
 		});
 		Registry.register(Registry.CUSTOM_STAT, "open_diamond_chest", OPEN_DIAMOND_CHEST);
 		Stats.CUSTOM.getOrCreateStat(OPEN_DIAMOND_CHEST, StatFormatter.DEFAULT);
@@ -154,17 +153,17 @@ public class SimpleProgressions implements ModInitializer {
 	static {
 		NETHERITE_CHEST_BLOCK = Registry.register(Registry.BLOCK,
 				NETHERITE_CHEST_ID,
-				new GenericChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST), ChestType.NETHERITE));
+				new GenericChestBlock(FabricBlockSettings.copyOf(Blocks.CHEST), ContainerType.NETHERITE));
 		NETHERITE_CHEST_ITEM = Registry.register(Registry.ITEM,
 				NETHERITE_CHEST_ID,
-				new GenericChestItem(NETHERITE_CHEST_BLOCK, new Item.Settings().group(SimpleProgressionsItemGroup), ChestType.NETHERITE));
+				new GenericChestItem(NETHERITE_CHEST_BLOCK, new Item.Settings().group(SimpleProgressionsItemGroup), ContainerType.NETHERITE));
 		NETHERITE_CHEST_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE,
 				NETHERITE_CHEST_ID,
 				FabricBlockEntityTypeBuilder.create((BlockPos pos, BlockState state) -> {
-					return new GenericChestEntity(pos, state, ChestType.NETHERITE);
+					return new GenericChestEntity(pos, state, ContainerType.NETHERITE);
 				}, NETHERITE_CHEST_BLOCK).build(null));
 		NETHERITE_CHEST_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(NETHERITE_CHEST_ID, (int syncId, PlayerInventory playerInventory) -> {
-			return new GenericContainerScreenHandler(syncId, playerInventory, ChestType.NETHERITE);
+			return new GenericContainerScreenHandler(syncId, playerInventory, ContainerType.NETHERITE);
 		});
 		Registry.register(Registry.CUSTOM_STAT, "open_netherite_chest", OPEN_NETHERITE_CHEST);
 		Stats.CUSTOM.getOrCreateStat(OPEN_NETHERITE_CHEST, StatFormatter.DEFAULT);

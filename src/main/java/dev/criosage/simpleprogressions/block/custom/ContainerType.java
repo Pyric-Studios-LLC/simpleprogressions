@@ -8,7 +8,7 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 
-public enum ChestType {
+public enum ContainerType {
     COPPER(36, 4, 9, 176, 184, 8, 91,18,102,8,160,8),
     IRON(54, 6, 9, 176, 220, 8, 127,18,138,8,196,8),
     GOLD(72, 8,9, 176, 256, 8, 163,18,174,8,232,8),
@@ -79,9 +79,9 @@ public enum ChestType {
     public int getLHotInvSalt() {
         return lHotInvSalt;
     }
-    ChestType(int size, int rows, int cols, int guiBackgroundWidth, int guiBackgroundHeight,
-              int guiPlayerInventoryTitleX, int guiPlayerInventoryTitleY, int mOurInvSalt, int mPlaInvSalt,
-              int lPlaInvSalt, int mHotInvSalt, int lHotInvSalt) {
+    ContainerType(int size, int rows, int cols, int guiBackgroundWidth, int guiBackgroundHeight,
+                  int guiPlayerInventoryTitleX, int guiPlayerInventoryTitleY, int mOurInvSalt, int mPlaInvSalt,
+                  int lPlaInvSalt, int mHotInvSalt, int lHotInvSalt) {
         this.size = size;
         this.rows = rows;
         this.cols = cols;
@@ -97,9 +97,9 @@ public enum ChestType {
         this.guiTitleX = 8;
         this.guiTitleY = 6;
     }
-    ChestType(int size, int rows, int cols, int guiBackgroundWidth, int guiBackgroundHeight,
-              int guiPlayerInventoryTitleX, int guiPlayerInventoryTitleY, int mOurInvSalt, int mPlaInvSalt,
-              int lPlaInvSalt, int mHotInvSalt, int lHotInvSalt,int guiTitleX, int guiTitleY) {
+    ContainerType(int size, int rows, int cols, int guiBackgroundWidth, int guiBackgroundHeight,
+                  int guiPlayerInventoryTitleX, int guiPlayerInventoryTitleY, int mOurInvSalt, int mPlaInvSalt,
+                  int lPlaInvSalt, int mHotInvSalt, int lHotInvSalt, int guiTitleX, int guiTitleY) {
         this.size = size;
         this.rows = rows;
         this.cols = cols;
@@ -116,7 +116,7 @@ public enum ChestType {
         this.guiTitleY = guiTitleY;
     }
 
-    public static Block getBlockType(ChestType type) {
+    public static Block getBlockType(ContainerType type) {
         return switch (type) {
             case COPPER -> SimpleProgressions.COPPER_CHEST_BLOCK;
             case IRON -> SimpleProgressions.IRON_CHEST_BLOCK;
@@ -126,7 +126,7 @@ public enum ChestType {
             default -> Blocks.CHEST;
         };
     }
-    public static BlockEntityType getBlockEntityType(ChestType type) {
+    public static BlockEntityType getBlockEntityType(ContainerType type) {
         return switch (type) {
             case COPPER -> SimpleProgressions.COPPER_CHEST_ENTITY;
             case IRON -> SimpleProgressions.IRON_CHEST_ENTITY;
@@ -136,7 +136,7 @@ public enum ChestType {
             default -> BlockEntityType.CHEST;
         };
     }
-    public static Identifier getStatIdentifier(ChestType type) {
+    public static Identifier getStatIdentifier(ContainerType type) {
         return switch (type){
             case COPPER -> SimpleProgressions.OPEN_COPPER_CHEST;
             case IRON -> SimpleProgressions.OPEN_IRON_CHEST;
@@ -146,7 +146,7 @@ public enum ChestType {
             default -> Stats.OPEN_CHEST;
         };
     }
-    public static ScreenHandlerType getScreenHandler(ChestType type) {
+    public static ScreenHandlerType getScreenHandler(ContainerType type) {
         return switch (type){
             case COPPER -> SimpleProgressions.COPPER_CHEST_SCREEN_HANDLER;
             case IRON -> SimpleProgressions.IRON_CHEST_SCREEN_HANDLER;
@@ -156,7 +156,7 @@ public enum ChestType {
             default -> ScreenHandlerType.GENERIC_3X3;
         };
     }
-    public static Identifier animationResource(ChestType type){
+    public static Identifier animationResource(ContainerType type){
         return switch (type){
             case COPPER -> new Identifier(SimpleProgressions.MOD_ID, "animations/copper_chest.animation.json");
             case IRON -> new Identifier(SimpleProgressions.MOD_ID, "animations/iron_chest.animation.json");
@@ -166,7 +166,7 @@ public enum ChestType {
             default -> null;
         };
     }
-    public static Identifier modelResource(ChestType type){
+    public static Identifier modelResource(ContainerType type){
         return switch (type){
             case COPPER -> new Identifier(SimpleProgressions.MOD_ID, "geo/copper_chest.geo.json");
             case IRON -> new Identifier(SimpleProgressions.MOD_ID, "geo/iron_chest.geo.json");
@@ -176,7 +176,7 @@ public enum ChestType {
             default -> null;
         };
     }
-    public static Identifier textureResource(ChestType type){
+    public static Identifier textureResource(ContainerType type){
         return switch (type){
             case COPPER -> new Identifier(SimpleProgressions.MOD_ID, "textures/block/copper_chest.png");
             case IRON -> new Identifier(SimpleProgressions.MOD_ID, "textures/block/iron_chest.png");
@@ -186,7 +186,7 @@ public enum ChestType {
             default -> null;
         };
     }
-    public static String getSpecificAnimation(ChestType type){
+    public static String getSpecificAnimation(ContainerType type){
         return "animation." + String.valueOf(type).toLowerCase() + "_chest";
     }
 }

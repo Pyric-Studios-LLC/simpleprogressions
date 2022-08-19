@@ -27,9 +27,9 @@ import org.jetbrains.annotations.Nullable;
 public class GenericChestBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     public static final BooleanProperty OPEN = Properties.OPEN;
-    public ChestType type;
+    public ContainerType type;
 
-    public GenericChestBlock(Settings settings, ChestType type) {
+    public GenericChestBlock(Settings settings, ContainerType type) {
         super(settings.nonOpaque());
         this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH)).with(OPEN, false));
         this.type = type;
@@ -42,7 +42,7 @@ public class GenericChestBlock extends BlockWithEntity {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof GenericChestEntity) {
                 player.openHandledScreen((GenericChestEntity)blockEntity);
-                player.incrementStat(ChestType.getStatIdentifier(type));
+                player.incrementStat(ContainerType.getStatIdentifier(type));
                 PiglinBrain.onGuardedBlockInteracted(player, true);
             }
 

@@ -1,7 +1,6 @@
 package dev.criosage.simpleprogressions.screenhandler;
 
-import dev.criosage.simpleprogressions.SimpleProgressions;
-import dev.criosage.simpleprogressions.block.custom.ChestType;
+import dev.criosage.simpleprogressions.block.custom.ContainerType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -15,19 +14,19 @@ public class GenericContainerScreenHandler extends ScreenHandler {
     public Inventory getInventory() {
         return this.inventory;
     }
-    private static ChestType type;
+    private static ContainerType type;
 
     //This constructor gets called on the client when the server wants it to open the screenHandler,
     //The client will call the other constructor with an empty Inventory and the screenHandler will automatically
     //sync this empty inventory with the inventory on the server.
-    public GenericContainerScreenHandler(int syncId, PlayerInventory playerInventory, ChestType type) {
+    public GenericContainerScreenHandler(int syncId, PlayerInventory playerInventory, ContainerType type) {
         this(syncId, playerInventory, new SimpleInventory(type.getSize()), type);
     }
 
     //This constructor gets called from the BlockEntity on the server without calling the other constructor first, the server knows the inventory of the container
     //and can therefore directly provide it as an argument. This inventory will then be synced to the client.
-    public GenericContainerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, ChestType type) {
-        super(ChestType.getScreenHandler(type), syncId);
+    public GenericContainerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, ContainerType type) {
+        super(ContainerType.getScreenHandler(type), syncId);
         checkSize(inventory, type.getSize());
         this.inventory = inventory;
         //some inventories do custom logic when a player opens it.

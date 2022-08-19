@@ -1,6 +1,6 @@
 package dev.criosage.simpleprogressions.block.entity;
 
-import dev.criosage.simpleprogressions.block.custom.ChestType;
+import dev.criosage.simpleprogressions.block.custom.ContainerType;
 import dev.criosage.simpleprogressions.block.custom.GenericChestBlock;
 import dev.criosage.simpleprogressions.screenhandler.GenericContainerScreenHandler;
 import net.minecraft.block.BlockState;
@@ -34,10 +34,10 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 public class GenericChestEntity extends LootableContainerBlockEntity implements IAnimatable {
     private DefaultedList<ItemStack> inventory;
     private ViewerCountManager stateManager;
-    public ChestType type;
+    public ContainerType type;
 
-    public GenericChestEntity(BlockPos pos, BlockState state, ChestType type) {
-        super(ChestType.getBlockEntityType(type), pos, state);
+    public GenericChestEntity(BlockPos pos, BlockState state, ContainerType type) {
+        super(ContainerType.getBlockEntityType(type), pos, state);
         this.inventory = DefaultedList.ofSize(type.getSize(), ItemStack.EMPTY);
         this.stateManager = new ViewerCountManager() {
             protected void onContainerOpen(World world, BlockPos pos, BlockState state) {
@@ -135,16 +135,19 @@ public class GenericChestEntity extends LootableContainerBlockEntity implements 
     }
     //region GeckoLib Animation
     private final AnimationFactory factory = new AnimationFactory(this);
+    private boolean isAnimOpen = false;
     private <E extends BlockEntity & IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         AnimationController<GenericChestEntity> controller = event.getController();
         controller.transitionLengthTicks = 0;
         if(this.isRemoved()) return PlayState.CONTINUE;
         if(this.getWorld().getBlockState(this.getPos()).get(GenericChestBlock.OPEN)) {
-            controller.setAnimation(new AnimationBuilder().addAnimation(ChestType.getSpecificAnimation(type) + ".open", false)
-                    .addAnimation(ChestType.getSpecificAnimation(type) + ".opened", true));
+            controller.setAnimation(new AnimationBuilder().addAnimation(ContainerType.getSpecificAnimation(type) + ".open", false)
+                    .addAnimation(ContainerType.getSpecificAnimation(type) + ".opened", true));
+            isAnimOpen = true;
         }
-        if(!this.getWorld().getBlockState(this.getPos()).get(GenericChestBlock.OPEN)) {
-            controller.setAnimation(new AnimationBuilder().addAnimation(ChestType.getSpecificAnimation(type) + ".close", false));
+        if(!this.getWorld().getBlockState(this.getPos()).get(GenericChestBlock.OPEN) && isAnimOpen == true) {
+            controller.setAnimation(new AnimationBuilder().addAnimation(ContainerType.getSpecificAnimation(type) + ".close", false));
+            isAnimOpen = false;
         }
         return PlayState.CONTINUE;
     }
