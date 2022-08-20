@@ -86,11 +86,11 @@ public class GenericChestEntity extends LootableContainerBlockEntity implements 
         return this.type.getSize();
     }
 
-    protected DefaultedList<ItemStack> getInvStackList() {
+    public DefaultedList<ItemStack> getInvStackList() {
         return this.inventory;
     }
 
-    protected void setInvStackList(DefaultedList<ItemStack> list) {
+    public void setInvStackList(DefaultedList<ItemStack> list) {
         this.inventory = list;
     }
 

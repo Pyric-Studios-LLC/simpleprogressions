@@ -169,6 +169,34 @@ public class SimpleProgressions implements ModInitializer {
 		Stats.CUSTOM.getOrCreateStat(OPEN_NETHERITE_CHEST, StatFormatter.DEFAULT);
 	}
 	//endregion Netherite Chest Region
+
+	private static final Identifier COPPER_UPGRADE_ID = new Identifier(MOD_ID, "copper_upgrade_item");
+	private static final Item COPPER_UPGRADE_ITEM;
+	private static final Identifier IRON_UPGRADE_ID = new Identifier(MOD_ID, "iron_upgrade_item");
+	private static final Item IRON_UPGRADE_ITEM;
+	private static final Identifier GOLD_UPGRADE_ID = new Identifier(MOD_ID, "gold_upgrade_item");
+	private static final Item GOLD_UPGRADE_ITEM;
+	private static final Identifier DIAMOND_UPGRADE_ID = new Identifier(MOD_ID, "diamond_upgrade_item");
+	private static final Item DIAMOND_UPGRADE_ITEM;
+	private static final Identifier NETHERITE_UPGRADE_ID = new Identifier(MOD_ID, "netherite_upgrade_item");
+	private static final Item NETHERITE_UPGRADE_ITEM;
+	static {
+		COPPER_UPGRADE_ITEM = Registry.register(Registry.ITEM,
+				COPPER_UPGRADE_ID,
+				new GenericUpgradeItem(new Item.Settings().group(SimpleProgressionsItemGroup), UpgradeType.COPPER));
+		IRON_UPGRADE_ITEM = Registry.register(Registry.ITEM,
+				IRON_UPGRADE_ID,
+				new GenericUpgradeItem(new Item.Settings().group(SimpleProgressionsItemGroup), UpgradeType.IRON));
+		GOLD_UPGRADE_ITEM = Registry.register(Registry.ITEM,
+				GOLD_UPGRADE_ID,
+				new GenericUpgradeItem(new Item.Settings().group(SimpleProgressionsItemGroup), UpgradeType.GOLD));
+		DIAMOND_UPGRADE_ITEM = Registry.register(Registry.ITEM,
+				DIAMOND_UPGRADE_ID,
+				new GenericUpgradeItem(new Item.Settings().group(SimpleProgressionsItemGroup), UpgradeType.DIAMOND));
+		NETHERITE_UPGRADE_ITEM = Registry.register(Registry.ITEM,
+				NETHERITE_UPGRADE_ID,
+				new GenericUpgradeItem(new Item.Settings().group(SimpleProgressionsItemGroup), UpgradeType.NETHERITE));
+	}
 	@Override
 	public void onInitialize() {
 
