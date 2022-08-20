@@ -19,9 +19,10 @@ Goal : Add progression to multiple block entities into minecraft.
 ## Current mod progress
 - Added all chests.
 - Completed version 0.1.0
+- All currently known bugs resolved.
+- Moved to generic versioning.
 
 ## Current known bugs
-- On Esc chests auto open for approximately 30 seconds, needs improvements to if blocks in predicate
 
 ## License
 

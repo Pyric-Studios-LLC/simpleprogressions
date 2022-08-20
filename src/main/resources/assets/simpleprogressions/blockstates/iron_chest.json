@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "simpleprogressions:block/iron_chest.json"}
+    "": { "model": "simpleprogressions:block/iron_chest"}
   }
 }

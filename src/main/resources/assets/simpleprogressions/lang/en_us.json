@@ -1,8 +1,10 @@
 {
   "itemGroup.simpleprogressions.itemgroup" : "Simple Progressions",
+
   "block.simpleprogressions.copper_chest" : "Copper Chest",
   "block.simpleprogressions.iron_chest" : "Iron Chest",
   "block.simpleprogressions.gold_chest" : "Gold Chest",
   "block.simpleprogressions.diamond_chest" : "Diamond Chest",
-  "block.simpleprogressions.netherite_chest" : "Netherite Chest"
+  "block.simpleprogressions.netherite_chest" : "Netherite Chest",
+  "item.simpleprogressions.copper_upgrade_item" : "Copper Upgrade"
 }
