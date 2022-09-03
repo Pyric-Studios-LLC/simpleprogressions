@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:diamond_block"
+    },
+    "B": {
+      "item": "minecraft:diamond"
+    },
+    "C": {
+      "item": "simpleprogressions:gold_upgrade_item"
+    }
+  },
+  "result": {
+    "item": "simpleprogressions:diamond_upgrade_item"
+  }
+}

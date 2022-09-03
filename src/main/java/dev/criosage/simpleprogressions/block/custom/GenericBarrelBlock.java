@@ -1,5 +1,6 @@
 package dev.criosage.simpleprogressions.block.custom;
 
+import dev.criosage.simpleprogressions.block.entity.GenericBarrelEntity;
 import dev.criosage.simpleprogressions.block.entity.GenericChestEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -24,24 +25,29 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class GenericChestBlock extends BlockWithEntity {
+public class GenericBarrelBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     public static final BooleanProperty OPEN = Properties.OPEN;
     public ContainerType type;
 
-    public GenericChestBlock(Settings settings, ContainerType type) {
+    public GenericBarrelBlock(Settings settings, ContainerType type) {
         super(type.getSettings());
         this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH)).with(OPEN, false));
         this.type = type;
     }
 
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new GenericChestEntity(pos, state, type);
+    }
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof GenericChestEntity) {
-                player.openHandledScreen((GenericChestEntity)blockEntity);
+            if (blockEntity instanceof GenericBarrelEntity) {
+                player.openHandledScreen((GenericBarrelEntity)blockEntity);
                 player.incrementStat(ContainerType.getStatIdentifier(type));
                 PiglinBrain.onGuardedBlockInteracted(player, true);
             }
@@ -64,19 +70,13 @@ public class GenericChestBlock extends BlockWithEntity {
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof GenericChestEntity) {
-            ((GenericChestEntity)blockEntity).tick();
+        if (blockEntity instanceof GenericBarrelEntity) {
+            ((GenericBarrelEntity)blockEntity).tick();
         }
 
     }
-
-    @Nullable
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new GenericChestEntity(pos, state, type);
-    }
-
     public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.ENTITYBLOCK_ANIMATED;
+        return BlockRenderType.MODEL;
     }
 
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
@@ -112,6 +112,4 @@ public class GenericChestBlock extends BlockWithEntity {
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         return (BlockState)this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
     }
-
-
 }

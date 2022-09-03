@@ -65,12 +65,11 @@ public class GenericChestEntity extends LootableContainerBlockEntity implements 
         this.type = type;
     }
 
-    protected void writeNbt(NbtCompound nbt) {
+    public void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         if (!this.serializeLootTable(nbt)) {
             Inventories.writeNbt(nbt, this.inventory);
         }
-
     }
 
     public void readNbt(NbtCompound nbt) {
@@ -79,7 +78,6 @@ public class GenericChestEntity extends LootableContainerBlockEntity implements 
         if (!this.deserializeLootTable(nbt)) {
             Inventories.readNbt(nbt, this.inventory);
         }
-
     }
 
     public int size() {

@@ -1,5 +1,6 @@
 package dev.criosage.simpleprogressions;
 
+import com.eliotlash.mclib.math.functions.classic.Mod;
 import dev.criosage.simpleprogressions.block.custom.*;
 import dev.criosage.simpleprogressions.block.entity.*;
 import dev.criosage.simpleprogressions.item.custom.*;
@@ -12,6 +13,7 @@ import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.BlockItem;
@@ -170,6 +172,29 @@ public class SimpleProgressions implements ModInitializer {
 	}
 	//endregion Netherite Chest Region
 
+	//region Copper Barrel Region
+
+	private static final Identifier COPPER_BARREL_ID = new Identifier(MOD_ID, "copper_barrel");
+	private static final Block COPPER_BARREL_BLOCK;
+	private static final BlockEntityType<GenericBarrelEntity> COPPER_BARREL_ENTITY;
+	private static final BlockItem COPPER_BARREL_ITEM;
+	static {
+		COPPER_BARREL_BLOCK = Registry.register(Registry.BLOCK,
+				COPPER_BARREL_ID,
+				new GenericBarrelBlock(FabricBlockSettings.copyOf(Blocks.BARREL), ContainerType.COPPER));
+		COPPER_BARREL_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE,
+				COPPER_BARREL_ID,
+				FabricBlockEntityTypeBuilder.create((BlockPos pos, BlockState state) -> {
+					return new GenericBarrelEntity(pos, state, ContainerType.COPPER);
+					}, COPPER_BARREL_BLOCK).build(null));
+		COPPER_BARREL_ITEM = Registry.register(Registry.ITEM,
+				COPPER_BARREL_ID,
+				new GenericBarrelItem(COPPER_BARREL_BLOCK, new Item.Settings().group(SimpleProgressionsItemGroup), ContainerType.COPPER));
+	}
+
+	//endregion Copper Barrel Region
+
+	//region Upgrade Items
 	private static final Identifier COPPER_UPGRADE_ID = new Identifier(MOD_ID, "copper_upgrade_item");
 	private static final Item COPPER_UPGRADE_ITEM;
 	private static final Identifier IRON_UPGRADE_ID = new Identifier(MOD_ID, "iron_upgrade_item");
@@ -197,6 +222,7 @@ public class SimpleProgressions implements ModInitializer {
 				NETHERITE_UPGRADE_ID,
 				new GenericUpgradeItem(new Item.Settings().group(SimpleProgressionsItemGroup), UpgradeType.NETHERITE));
 	}
+	//endregion Upgrade Items
 	@Override
 	public void onInitialize() {
 

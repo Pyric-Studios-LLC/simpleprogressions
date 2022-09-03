@@ -118,8 +118,8 @@ public enum ContainerType {
         this.guiTitleX = guiTitleX;
         this.guiTitleY = guiTitleY;
     }
-    public static AbstractBlock.Settings getSettings(ContainerType type) {
-        return switch (type) {
+    public AbstractBlock.Settings getSettings() {
+        return switch (this) {
             case COPPER -> FabricBlockSettings.copyOf(Blocks.CHEST).nonOpaque().strength(3f);
             case IRON -> FabricBlockSettings.copyOf(Blocks.CHEST).nonOpaque().strength(5f);
             case GOLD -> FabricBlockSettings.copyOf(Blocks.CHEST).nonOpaque().strength(3f);

@@ -3,9 +3,11 @@ package dev.criosage.simpleprogressions.item.custom;
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializers;
 import com.mojang.serialization.Decoder;
 import dev.criosage.simpleprogressions.SimpleProgressions;
+import dev.criosage.simpleprogressions.block.custom.ContainerType;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.enums.ChestType;
 
 public enum UpgradeType {
     COPPER(Blocks.CHEST),
@@ -20,6 +22,16 @@ public enum UpgradeType {
     }
     UpgradeType(Block upgradeCondition) {
         this.upgradeCondition = upgradeCondition;
+    }
+    public ContainerType getContainerType(){
+        return switch (this) {
+            case COPPER -> ContainerType.COPPER;
+            case IRON -> ContainerType.IRON;
+            case GOLD -> ContainerType.GOLD;
+            case DIAMOND -> ContainerType.DIAMOND;
+            case NETHERITE -> ContainerType.NETHERITE;
+            default -> null;
+        };
     }
     public Block getNextContainer() {
         return switch (this) {

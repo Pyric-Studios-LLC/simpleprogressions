@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "item": "minecraft:netherite_block"
+  },
+  "base": {
+    "item": "simpleprogressions:diamond_upgrade_item"
+  },
+  "result": {
+    "item": "simpleprogressions:netherite_upgrade_item"
+  }
+}
