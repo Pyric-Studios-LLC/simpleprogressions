@@ -1,5 +1,6 @@
 {
   "variants": {
-    "": { "model": "simpleprogressions:block/copper_barrel" }
+    "open=false": { "model": "simpleprogressions:block/copper_barrel" },
+    "open=true": { "model": "simpleprogressions:block/copper_barrel" }
   }
 }

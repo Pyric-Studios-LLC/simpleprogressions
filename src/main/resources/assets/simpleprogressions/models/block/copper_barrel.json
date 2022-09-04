@@ -2,23 +2,23 @@
 	"credit": "Made with Blockbench",
 	"parent": "builtin/entity",
 	"textures": {
-		"0": "copper_barrel_sides",
-		"1": "copper_barrel_top",
-		"2": "copper_barrel_bottom",
-		"particle": "copper_barrel_sides"
+		"0": "simpleprogressions:block/copper_barrel_sides",
+		"1": "simpleprogressions:block/copper_barrel_top",
+		"2": "simpleprogressions:block/copper_barrel_bottom",
+		"particle": "simpleprogressions:block/copper_barrel_sides"
 	},
 	"elements": [
 		{
-			"name": "copper_barrel_closed",
+			"name": "copper_barrel",
 			"from": [0, 0, 0],
 			"to": [16, 16, 16],
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"east": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"east":  {"uv": [0, 0, 16, 16], "texture": "#0"},
 				"south": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#1"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#2"}
+				"west":  {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"up":    {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"down":  {"uv": [0, 0, 16, 16], "texture": "#2"}
 			}
 		}
 	],
